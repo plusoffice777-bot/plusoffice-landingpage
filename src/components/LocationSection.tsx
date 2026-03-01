@@ -2,13 +2,13 @@ import { useState } from 'react';
 import { motion } from 'motion/react';
 
 const branches = [
-    { id: 'gangnam', name: '강남점', query: '강남역 2호선' },
-    { id: 'seocho', name: '서초점', query: '서초역' },
-    { id: 'songpa', name: '송파점', query: '잠실역' },
-    { id: 'mapo', name: '마포점', query: '공덕역' },
-    { id: 'yeouido', name: '여의도점', query: '여의도역' },
-    { id: 'yongin', name: '용인점', query: '용인 처인구' },
-    { id: 'dongtan', name: '동탄점', query: '동탄역 SRT' },
+    { id: 'gangnam', name: '강남점', query: '서울시 강남구 논현동' },
+    { id: 'seocho', name: '서초점', query: '서울시 서초구 서초동' },
+    { id: 'songpa', name: '송파점', query: '서울시 송파구 풍납동' },
+    { id: 'mapo', name: '마포점', query: '서울 마포구 상수동' },
+    { id: 'yeouido', name: '여의도점', query: '서울 영등포구 여의도동' },
+    { id: 'yongin', name: '용인점', query: '경기 용인시 기흥구 구갈동' },
+    { id: 'dongtan', name: '동탄점', query: '경기 화성시 동탄구 오산동' },
 ];
 
 export default function LocationSection() {
