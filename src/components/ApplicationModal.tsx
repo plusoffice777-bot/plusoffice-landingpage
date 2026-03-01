@@ -529,9 +529,9 @@ export default function ApplicationModal({ isOpen, onClose }: ApplicationModalPr
                                         <div className="absolute inset-0 w-full h-full animate-[ping_1.5s_ease-out_1] rounded-full bg-emerald-400 opacity-20"></div>
                                     </div>
                                     <h3 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-3 tracking-tight">신청이 접수되었습니다!</h3>
-                                    <p className="text-slate-500 text-[15px] leading-relaxed mb-8 max-w-[280px] mx-auto">
+                                    <p className="text-slate-500 text-[15px] leading-relaxed mb-8 max-w-sm mx-auto break-keep px-4">
                                         담당 매니저가 내용을 확인한 후,<br />
-                                        입력해주신 <strong className="text-slate-700 font-semibold">연락처로 빠르게 안내</strong>해 드리겠습니다.
+                                        입력해주신 <strong className="text-slate-700 font-semibold">연락처로 빠르게 안내해 드리겠습니다.</strong>
                                     </p>
                                     <button
                                         onClick={onClose}
