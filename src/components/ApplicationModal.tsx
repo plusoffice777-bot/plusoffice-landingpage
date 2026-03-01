@@ -170,18 +170,18 @@ export default function ApplicationModal({ isOpen, onClose }: ApplicationModalPr
                     },
                     body: JSON.stringify({
                         fields: {
-                            "유입경로": "홈페이지",
-                            "성함": form.name,
-                            "연락처": form.contact,
-                            "지점": form.region,
-                            "계약기간": form.duration,
-                            "우편물개봉동": form.mailConsent,
-                            "관심 베네핏": form.benefit,
-                            "문의내용(비고)": form.message,
-                            "개인정보수집동의": form.agreement ? "동의" : "미동의",
-                            "마케팅수신동의": form.marketing ? "동의" : "미동의",
-                            "신청일시": new Date().toLocaleString('ko-KR')
-                        }
+                            "⛔유입경로": "홈페이지",
+                            "⛔성함": form.name,
+                            "⛔연락처": form.contact,
+                            "⛔지점": form.region,
+                            "⛔계약기간": form.duration,
+                            "⛔우편물개봉동의": form.mailConsent,
+                            "⛔관심 베네핏": form.benefit,
+                            "⛔문의내용(비고)": form.message,
+                            "⛔개인정보수집동의": form.agreement ? "동의" : "미동의",
+                            "⛔마케팅수신동의": form.marketing ? "동의" : "미동의"
+                        },
+                        typecast: true
                     })
                 });
 
@@ -189,8 +189,14 @@ export default function ApplicationModal({ isOpen, onClose }: ApplicationModalPr
                     setIsSuccess(true);
                 } else {
                     const errorData = await response.json();
-                    console.error('Airtable Submission Error:', errorData);
-                    alert('신청 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.');
+                    console.error('Airtable Error Detail:', JSON.stringify(errorData, null, 2));
+                    const errorMsg = errorData.error?.message || 'Airtable 설정 오류가 발생했습니다.';
+
+                    if (errorMsg.includes('select option')) {
+                        alert(`신청 중 오류: 에어테이블 필드에서 '동의' 항목을 찾을 수 없습니다. 필드 타입을 'Single line text'로 변경해 주세요.`);
+                    } else {
+                        alert(`신청 중 오류가 발생했습니다: ${errorMsg}`);
+                    }
                 }
             } catch (error) {
                 console.error('Network Error:', error);
