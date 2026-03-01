@@ -16,6 +16,8 @@ import ApplicationModal from './components/ApplicationModal';
 import PolicyModal from './components/PolicyModal';
 import type { PolicyType } from './components/PolicyModal';
 import Footer from './components/Footer';
+import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 
 export default function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -23,6 +25,8 @@ export default function App() {
 
   return (
     <main className="min-h-screen bg-[#fafafa] flex flex-col font-sans relative">
+      <Analytics />
+      <SpeedInsights />
       <HeroSection onOpenModal={() => setIsModalOpen(true)} />
       <TrustSection />
 
