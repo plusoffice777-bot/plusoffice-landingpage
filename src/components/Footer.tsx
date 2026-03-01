@@ -23,7 +23,9 @@ export default function Footer({ onOpenPolicy }: FooterProps) {
 
                     <div className="space-y-1.5 leading-relaxed">
                         <p>
-                            <span className="font-semibold text-gray-700">법인명 :</span> (주)플러스오피스<span className="mx-2 text-gray-300">|</span>
+                            <span className="font-semibold text-gray-700">법인명 :</span> (주)플러스오피스
+                        </p>
+                        <p>
                             <span className="font-semibold text-gray-700">사업자등록번호 :</span> 890-86-03495
                         </p>
                         <p>
@@ -32,12 +34,13 @@ export default function Footer({ onOpenPolicy }: FooterProps) {
                         <p>
                             <span className="font-semibold text-gray-700">통신판매업 신고번호 :</span> 2023-서울송파-6612호
                         </p>
-                        <p className="pt-2 flex flex-wrap gap-x-2 gap-y-1 items-center">
+                        <p className="pt-2">
                             <span className="font-semibold text-gray-700">고객센터 :</span>
-                            <strong className="text-gray-900 text-base">1551-5586</strong>
-                            <span className="mx-1 text-gray-300">|</span>
+                            <strong className="text-gray-900 text-base ml-1">1551-5586</strong>
+                        </p>
+                        <p>
                             <span className="font-semibold text-gray-700">이메일 :</span>
-                            <a href="mailto:plusoffice777@gmail.com" className="hover:text-blue-600 transition-colors">plusoffice777@gmail.com</a>
+                            <a href="mailto:plusoffice777@gmail.com" className="ml-1 hover:text-blue-600 transition-colors">plusoffice777@gmail.com</a>
                         </p>
                         <p className="text-gray-400">
                             운영 시간 : 09:00 ~ 19:00 (월~금, 주말 및 공휴일 휴무)
