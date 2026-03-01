@@ -2,17 +2,17 @@ import { useState } from 'react';
 import { motion } from 'motion/react';
 
 const branches = [
-    { id: 'gangnam', name: '강남점', query: '강남역' },
-    { id: 'seocho', name: '서초점', query: '서초구청' },
-    { id: 'songpa', name: '송파점', query: '송파구청' },
-    { id: 'mapo', name: '마포점', query: '마포구청' },
+    { id: 'gangnam', name: '강남점', query: '강남역 2호선' },
+    { id: 'seocho', name: '서초점', query: '서초역' },
+    { id: 'songpa', name: '송파점', query: '잠실역' },
+    { id: 'mapo', name: '마포점', query: '공덕역' },
     { id: 'yeouido', name: '여의도점', query: '여의도역' },
-    { id: 'yongin', name: '용인점', query: '용인시청' },
-    { id: 'dongtan', name: '동탄점', query: '동탄역' },
+    { id: 'yongin', name: '용인점', query: '용인 처인구' },
+    { id: 'dongtan', name: '동탄점', query: '동탄역 SRT' },
 ];
 
 export default function LocationSection() {
-    const [activeBranch, setActiveBranch] = useState(branches[4]);
+    const [activeBranch, setActiveBranch] = useState(branches[0]);
 
     return (
         <div id="location" className="min-h-screen bg-white font-sans text-gray-800 selection:bg-blue-100">
