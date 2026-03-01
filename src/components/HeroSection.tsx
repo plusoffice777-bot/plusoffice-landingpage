@@ -295,7 +295,7 @@ export default function HeroSection({ onOpenModal }: HeroSectionProps) {
                         <a href="tel:1551-5586" className="text-gray-900 font-bold text-[14px] sm:text-[15px] hover:text-blue-500 transition-colors mr-1 sm:mr-3" aria-label="대표전화로 전화걸기">
                             1551-5586
                         </a>
-                        <a href="http://pf.kakao.com/" target="_blank" rel="noopener noreferrer" className="hidden sm:inline-flex items-center justify-center font-inherit text-sm font-semibold px-4 py-2 min-h-[40px] rounded-full cursor-pointer transition-all border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 hover:shadow-sm no-underline" aria-label="카카오톡 1:1 문의하기">1:1 문의</a>
+                        <a href="http://pf.kakao.com/_xnWMwG" target="_blank" rel="noopener noreferrer" className="hidden sm:inline-flex items-center justify-center font-inherit text-sm font-semibold px-4 py-2 min-h-[40px] rounded-full cursor-pointer transition-all border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 hover:shadow-sm no-underline" aria-label="카카오톡 1:1 문의하기">1:1 문의</a>
                         <button onClick={onOpenModal} className="font-inherit text-sm font-semibold px-5 py-2 min-h-[40px] rounded-full cursor-pointer transition-all border-none bg-gradient-to-r from-blue-500 to-cyan-400 text-white shadow-md hover:opacity-90 hover:-translate-y-0.5" aria-label="신청하기">신청하기</button>
                     </div>
                 </header>
@@ -317,7 +317,7 @@ export default function HeroSection({ onOpenModal }: HeroSectionProps) {
                             빠른 신청하기
                         </button>
                         <a
-                            href="http://pf.kakao.com/"
+                            href="http://pf.kakao.com/_xnWMwG"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="inline-flex items-center justify-center px-6 sm:px-8 py-3.5 sm:py-4 bg-white text-gray-900 text-base font-semibold rounded-full shadow-lg border border-gray-200 hover:bg-gray-50 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 w-full sm:w-[180px] no-underline"

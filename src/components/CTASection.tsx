@@ -146,7 +146,7 @@ export default function CTASection({ onOpenModal }: CTASectionProps) {
                         빠른계약신청하기
                     </button>
                     <a
-                        href="http://pf.kakao.com/"
+                        href="http://pf.kakao.com/_xnWMwG"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex items-center justify-center px-6 sm:px-8 py-4 bg-transparent text-white text-base md:text-lg font-semibold rounded-full shadow-lg border border-gray-600 hover:bg-white/10 hover:border-gray-400 hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-gray-500/50 transition-all duration-300 w-full sm:w-auto min-w-[240px] no-underline"
