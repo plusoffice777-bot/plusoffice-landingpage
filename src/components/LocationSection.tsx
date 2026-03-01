@@ -7,8 +7,8 @@ const branches = [
     { id: 'songpa', name: '송파점', query: '서울시 송파구 풍납동' },
     { id: 'mapo', name: '마포점', query: '서울 마포구 상수동' },
     { id: 'yeouido', name: '여의도점', query: '서울 영등포구 여의도동' },
-    { id: 'yongin', name: '용인점', query: '경기 용인시 기흥구 구갈동 354-2' },
-    { id: 'dongtan', name: '동탄점', query: '경기 화성시 오산동 967-1' },
+    { id: 'yongin', name: '용인점', query: '경기 용인시 기흥구 구갈동 352' },
+    { id: 'dongtan', name: '동탄점', query: '경기 화성시 오산동 967-156' },
 ];
 
 export default function LocationSection() {
