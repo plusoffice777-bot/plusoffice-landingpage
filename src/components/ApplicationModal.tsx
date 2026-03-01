@@ -192,10 +192,17 @@ export default function ApplicationModal({ isOpen, onClose }: ApplicationModalPr
                     console.error('Airtable Error Detail:', JSON.stringify(errorData, null, 2));
                     const errorMsg = errorData.error?.message || 'Airtable 설정 오류가 발생했습니다.';
 
+                    // 디버깅을 위한 상세 정보 (마스킹 처리)
+                    const AIRTABLE_BASE_ID = import.meta.env.VITE_AIRTABLE_BASE_ID;
+                    const AIRTABLE_TABLE_NAME = import.meta.env.VITE_AIRTABLE_TABLE_NAME;
+                    const debugInfo = `\n\n(참고: ${AIRTABLE_BASE_ID?.substring(0, 5)}... / ${AIRTABLE_TABLE_NAME})`;
+
                     if (errorMsg.includes('select option')) {
-                        alert(`신청 중 오류: 에어테이블 필드에서 '동의' 항목을 찾을 수 없습니다. 필드 타입을 'Single line text'로 변경해 주세요.`);
+                        alert(`신청 중 오류: 에어테이블 필드에서 '동의' 항목을 찾을 수 없습니다. 필드 타입을 'Single line text'로 변경해 주세요.${debugInfo}`);
+                    } else if (errorMsg.includes('Invalid permissions') || errorMsg.includes('not found')) {
+                        alert(`신청 중 오류: 에어테이블 권한 또는 설정 오류입니다. Vercel의 환경변수(Base ID, Table Name, PAT)를 확인하고 'Redeploy' 해주세요.${debugInfo}`);
                     } else {
-                        alert(`신청 중 오류가 발생했습니다: ${errorMsg}`);
+                        alert(`신청 중 오류가 발생했습니다: ${errorMsg}${debugInfo}`);
                     }
                 }
             } catch (error) {
