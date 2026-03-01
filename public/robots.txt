@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+User-agent: PerplexityBot
+Allow: /
+User-agent: OAI-SearchBot
+Allow: /
+
+Sitemap: https://plusoffice.co.kr/sitemap.xml
