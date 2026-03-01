@@ -147,11 +147,57 @@ export default function ApplicationModal({ isOpen, onClose }: ApplicationModalPr
         if (validate()) {
             setIsSubmitting(true);
 
-            // 시뮬레이션 로딩바 생성 (0.6초)
-            setTimeout(() => {
+            const AIRTABLE_BASE_ID = import.meta.env.VITE_AIRTABLE_BASE_ID;
+            const AIRTABLE_TABLE_NAME = import.meta.env.VITE_AIRTABLE_TABLE_NAME;
+            const AIRTABLE_PAT = import.meta.env.VITE_AIRTABLE_PAT;
+
+            // API 정보가 없는 경우 경고 후 중단 (개발용)
+            if (!AIRTABLE_BASE_ID || !AIRTABLE_TABLE_NAME || !AIRTABLE_PAT) {
+                console.warn('Airtable credentials are missing. Falling back to simulation.');
+                setTimeout(() => {
+                    setIsSubmitting(false);
+                    setIsSuccess(true);
+                }, 800);
+                return;
+            }
+
+            try {
+                const response = await fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(AIRTABLE_TABLE_NAME)}`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${AIRTABLE_PAT}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        fields: {
+                            "유입경로": "홈페이지",
+                            "성함": form.name,
+                            "연락처": form.contact,
+                            "지점": form.region,
+                            "계약기간": form.duration,
+                            "우편물개봉동": form.mailConsent,
+                            "관심 베네핏": form.benefit,
+                            "문의내용(비고)": form.message,
+                            "개인정보수집동의": form.agreement ? "동의" : "미동의",
+                            "마케팅수신동의": form.marketing ? "동의" : "미동의",
+                            "신청일시": new Date().toLocaleString('ko-KR')
+                        }
+                    })
+                });
+
+                if (response.ok) {
+                    setIsSuccess(true);
+                } else {
+                    const errorData = await response.json();
+                    console.error('Airtable Submission Error:', errorData);
+                    alert('신청 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.');
+                }
+            } catch (error) {
+                console.error('Network Error:', error);
+                alert('네트워크 오류가 발생했습니다. 인터넷 연결을 확인해 주세요.');
+            } finally {
                 setIsSubmitting(false);
-                setIsSuccess(true);
-            }, 600);
+            }
         } else {
             if (firstInvalidRef.current) {
                 firstInvalidRef.current.focus();
@@ -276,13 +322,13 @@ export default function ApplicationModal({ isOpen, onClose }: ApplicationModalPr
                                                             className={`appearance-none w-full px-4 py-3.5 rounded-xl border bg-slate-50/50 hover:bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 transition-all text-slate-700 font-medium cursor-pointer
                                                                 ${errors.region ? 'border-red-500 bg-red-50 text-red-900 focus:ring-red-500/30' : 'border-slate-200 focus:ring-blue-500/30 focus:border-blue-500'}`}>
                                                             <option value="" disabled>선택해 주세요</option>
-                                                            <option value="강남">강남 지점</option>
-                                                            <option value="서초">서초 지점</option>
-                                                            <option value="송파">송파 지점</option>
-                                                            <option value="여의도">여의도 지점</option>
-                                                            <option value="마포">마포 지점</option>
-                                                            <option value="용인">용인 지점</option>
-                                                            <option value="동탄">동탄 지점</option>
+                                                            <option value="강남점">강남 지점</option>
+                                                            <option value="서초점">서초 지점</option>
+                                                            <option value="송파점">송파 지점</option>
+                                                            <option value="여의도점">여의도 지점</option>
+                                                            <option value="마포점">마포 지점</option>
+                                                            <option value="용인점">용인 지점</option>
+                                                            <option value="동탄점">동탄 지점</option>
                                                         </select>
                                                         <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-400">
                                                             <ChevronDown className="w-4 h-4" />
