@@ -411,8 +411,8 @@ export default function ApplicationModal({ isOpen, onClose }: ApplicationModalPr
                                                             className={`appearance-none w-full px-4 py-3.5 rounded-xl border bg-slate-50/50 hover:bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 transition-all text-slate-700 font-medium cursor-pointer
                                                                 ${errors.mailConsent ? 'border-red-500 bg-red-50 text-red-900 focus:ring-red-500/30' : 'border-slate-200 focus:ring-blue-500/30 focus:border-blue-500'}`}>
                                                             <option value="" disabled>선택해 주세요</option>
-                                                            <option value="동의">✅ 동의 (스캔 전송)</option>
-                                                            <option value="미동의">❌ 미동의 (보관)</option>
+                                                            <option value="동의">✅ 동의</option>
+                                                            <option value="미동의">❌ 미동의</option>
                                                         </select>
                                                         <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-400">
                                                             <ChevronDown className="w-4 h-4" />
