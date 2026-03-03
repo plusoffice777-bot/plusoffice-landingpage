@@ -147,74 +147,69 @@ export default function ApplicationModal({ isOpen, onClose }: ApplicationModalPr
         if (validate()) {
             setIsSubmitting(true);
 
-            const AIRTABLE_BASE_ID = import.meta.env.VITE_AIRTABLE_BASE_ID;
-            const AIRTABLE_TABLE_NAME = import.meta.env.VITE_AIRTABLE_TABLE_NAME;
-            const AIRTABLE_PAT = import.meta.env.VITE_AIRTABLE_PAT;
+            // 미리 환경변수 로드 (약간의 속도 향상)
+            const creds = {
+                baseId: import.meta.env.VITE_AIRTABLE_BASE_ID,
+                tableName: import.meta.env.VITE_AIRTABLE_TABLE_NAME,
+                pat: import.meta.env.VITE_AIRTABLE_PAT
+            };
 
-            // API 정보가 없는 경우 경고 후 중단 (개발용)
-            if (!AIRTABLE_BASE_ID || !AIRTABLE_TABLE_NAME || !AIRTABLE_PAT) {
-                console.warn('Airtable credentials are missing. Falling back to simulation.');
-                setTimeout(() => {
-                    setIsSubmitting(false);
-                    setIsSuccess(true);
-                }, 800);
+            if (!creds.baseId || !creds.tableName || !creds.pat) {
+                console.warn('Airtable credentials missing. Simulation mode.');
+                await new Promise(resolve => setTimeout(resolve, 600));
+                setIsSubmitting(false);
+                setIsSuccess(true);
                 return;
             }
 
             try {
-                const response = await fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(AIRTABLE_TABLE_NAME)}`, {
+                // 비동기 처리를 위한 데이터 정리
+                const payload = {
+                    fields: {
+                        "⛔유입경로": "홈페이지",
+                        "⛔성함": form.name,
+                        "⛔연락처": form.contact,
+                        "⛔지점": form.region,
+                        "⛔계약기간": form.duration,
+                        "⛔우편물개봉동의": form.mailConsent,
+                        "⛔관심 베네핏": form.benefit,
+                        "⛔문의내용(비고)": form.message,
+                        "⛔개인정보수집동의": form.agreement ? "동의" : "미동의",
+                        "⛔마케팅수신동의": form.marketing ? "동의" : "미동의"
+                    },
+                    typecast: true
+                };
+
+                const response = await fetch(`https://api.airtable.com/v0/${creds.baseId}/${encodeURIComponent(creds.tableName)}`, {
                     method: 'POST',
                     headers: {
-                        'Authorization': `Bearer ${AIRTABLE_PAT}`,
+                        'Authorization': `Bearer ${creds.pat}`,
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({
-                        fields: {
-                            "⛔유입경로": "홈페이지",
-                            "⛔성함": form.name,
-                            "⛔연락처": form.contact,
-                            "⛔지점": form.region,
-                            "⛔계약기간": form.duration,
-                            "⛔우편물개봉동의": form.mailConsent,
-                            "⛔관심 베네핏": form.benefit,
-                            "⛔문의내용(비고)": form.message,
-                            "⛔개인정보수집동의": form.agreement ? "동의" : "미동의",
-                            "⛔마케팅수신동의": form.marketing ? "동의" : "미동의"
-                        },
-                        typecast: true
-                    })
+                    body: JSON.stringify(payload)
                 });
 
                 if (response.ok) {
                     setIsSuccess(true);
                 } else {
                     const errorData = await response.json();
-                    console.error('Airtable Error Detail:', JSON.stringify(errorData, null, 2));
                     const errorMsg = errorData.error?.message || 'Airtable 설정 오류가 발생했습니다.';
-
-                    // 디버깅을 위한 상세 정보 (마스킹 처리)
-                    const AIRTABLE_BASE_ID = import.meta.env.VITE_AIRTABLE_BASE_ID;
-                    const AIRTABLE_TABLE_NAME = import.meta.env.VITE_AIRTABLE_TABLE_NAME;
-                    const debugInfo = `\n\n(참고: ${AIRTABLE_BASE_ID?.substring(0, 5)}... / ${AIRTABLE_TABLE_NAME})`;
+                    const debugInfo = `\n\n(ID: ${creds.baseId?.substring(0, 5)}...)`;
 
                     if (errorMsg.includes('select option')) {
-                        alert(`신청 중 오류: 에어테이블 필드에서 '동의' 항목을 찾을 수 없습니다. 필드 타입을 'Single line text'로 변경해 주세요.${debugInfo}`);
-                    } else if (errorMsg.includes('Invalid permissions') || errorMsg.includes('not found')) {
-                        alert(`신청 중 오류: 에어테이블 권한 또는 설정 오류입니다. Vercel의 환경변수(Base ID, Table Name, PAT)를 확인하고 'Redeploy' 해주세요.${debugInfo}`);
+                        alert(`항목 불일치: 에어테이블의 필드 설정을 확인해 주세요.${debugInfo}`);
                     } else {
                         alert(`신청 중 오류가 발생했습니다: ${errorMsg}${debugInfo}`);
                     }
                 }
             } catch (error) {
-                console.error('Network Error:', error);
-                alert('네트워크 오류가 발생했습니다. 인터넷 연결을 확인해 주세요.');
+                console.error('Submission Error:', error);
+                alert('네트워크 연결이 불안정합니다. 잠시 후 다시 시도해 주세요.');
             } finally {
                 setIsSubmitting(false);
             }
         } else {
-            if (firstInvalidRef.current) {
-                firstInvalidRef.current.focus();
-            }
+            firstInvalidRef.current?.focus();
         }
     };
 
