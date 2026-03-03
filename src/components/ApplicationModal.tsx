@@ -268,9 +268,9 @@ export default function ApplicationModal({ isOpen, onClose }: ApplicationModalPr
                             </button>
 
                             {!isSuccess ? (
-                                <>
-                                    {/* 헤더 영역 */}
-                                    <div className="px-8 pt-10 pb-6 relative overflow-hidden shrink-0 bg-white">
+                                <form onSubmit={handleSubmit} className="flex flex-col h-full overflow-hidden" noValidate>
+                                    {/* 헤더 영역 (고정) */}
+                                    <div className="px-8 pt-10 pb-6 relative overflow-hidden shrink-0 bg-white border-b border-slate-50">
                                         <div className="absolute -right-6 -top-6 w-24 h-24 bg-blue-50 rounded-full blur-2xl opacity-70 pointer-events-none"></div>
                                         <div className="relative z-10">
                                             <span className="inline-flex items-center gap-1.5 px-3 py-1 mb-4 text-xs font-bold text-blue-700 bg-blue-100 rounded-full">
@@ -285,236 +285,229 @@ export default function ApplicationModal({ isOpen, onClose }: ApplicationModalPr
                                         </div>
                                     </div>
 
-                                    {/* 스크롤 가능 폼 영역 */}
-                                    <div className="p-8 pt-2 overflow-y-auto modal-scroll relative bg-white pb-36 sm:pb-32">
-                                        <form onSubmit={handleSubmit} className="space-y-6" noValidate>
-
-                                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-4">
-                                                {/* 성함 필드 */}
-                                                <div key={shakeKeys.name} className={`relative group mt-2 sm:mt-0 ${errors.name ? 'animate-shake' : ''}`}>
-                                                    <input type="text" id="modal-name" name="name" placeholder=" " required aria-invalid={!!errors.name}
-                                                        ref={nameInputRef}
-                                                        value={form.name} onChange={handleChange}
-                                                        className={`peer w-full px-4 py-3.5 rounded-xl border bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 transition-all text-slate-800 font-medium placeholder-transparent
-                                                            ${errors.name ? 'border-red-500 bg-red-50 text-red-900 focus:ring-red-500/30' : 'border-slate-200 focus:ring-blue-500/30 focus:border-blue-500'}`} />
-                                                    <label htmlFor="modal-name" className="absolute left-4 top-3.5 text-slate-400 text-sm font-medium transition-all duration-200 pointer-events-none peer-focus:-translate-y-6 peer-focus:text-xs peer-focus:text-blue-600 peer-focus:bg-white peer-focus:px-1 peer-[&:not(:placeholder-shown)]:-translate-y-6 peer-[&:not(:placeholder-shown)]:text-xs peer-[&:not(:placeholder-shown)]:bg-white peer-[&:not(:placeholder-shown)]:px-1">
-                                                        성함 <span className="text-blue-500 ml-0.5">*</span>
-                                                    </label>
-                                                    {errors.name && (
-                                                        <p className="text-red-500 text-[11px] mt-1.5 font-semibold flex items-center gap-1">
-                                                            <X className="w-3 h-3" /> <span>{errors.name}</span>
-                                                        </p>
-                                                    )}
-                                                </div>
-
-                                                {/* 연락처 필드 */}
-                                                <div key={shakeKeys.contact} className={`relative group mt-2 sm:mt-0 ${errors.contact ? 'animate-shake' : ''}`}>
-                                                    <input type="tel" id="modal-contact" name="contact" placeholder=" " required aria-invalid={!!errors.contact} maxLength={13}
-                                                        value={form.contact} onChange={handleChange}
-                                                        className={`peer w-full px-4 py-3.5 rounded-xl border bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 transition-all text-slate-800 font-medium placeholder-transparent
-                                                            ${errors.contact ? 'border-red-500 bg-red-50 text-red-900 focus:ring-red-500/30' : 'border-slate-200 focus:ring-blue-500/30 focus:border-blue-500'}`} />
-                                                    <label htmlFor="modal-contact" className="absolute left-4 top-3.5 text-slate-400 text-sm font-medium transition-all duration-200 pointer-events-none peer-focus:-translate-y-6 peer-focus:text-xs peer-focus:text-blue-600 peer-focus:bg-white peer-focus:px-1 peer-[&:not(:placeholder-shown)]:-translate-y-6 peer-[&:not(:placeholder-shown)]:text-xs peer-[&:not(:placeholder-shown)]:bg-white peer-[&:not(:placeholder-shown)]:px-1">
-                                                        연락처 <span className="text-blue-500 ml-0.5">*</span>
-                                                    </label>
-                                                    {errors.contact && (
-                                                        <p className="text-red-500 text-[11px] mt-1.5 font-semibold flex items-center gap-1">
-                                                            <X className="w-3 h-3 shrink-0" /> <span>{errors.contact}</span>
-                                                        </p>
-                                                    )}
-                                                </div>
-                                            </div>
-
-                                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                                                {/* 지역 필드 */}
-                                                <div key={shakeKeys.region} className={errors.region ? 'animate-shake' : ''}>
-                                                    <label htmlFor="modal-region" className="block text-xs font-bold text-slate-600 mb-1.5 uppercase tracking-wide">
-                                                        희망 지역 <span className="text-blue-500">*</span>
-                                                    </label>
-                                                    <div className="relative">
-                                                        <select id="modal-region" name="region" required value={form.region} onChange={handleChange}
-                                                            className={`appearance-none w-full px-4 py-3.5 rounded-xl border bg-slate-50/50 hover:bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 transition-all text-slate-700 font-medium cursor-pointer
-                                                                ${errors.region ? 'border-red-500 bg-red-50 text-red-900 focus:ring-red-500/30' : 'border-slate-200 focus:ring-blue-500/30 focus:border-blue-500'}`}>
-                                                            <option value="" disabled>선택해 주세요</option>
-                                                            <option value="강남점">강남 지점</option>
-                                                            <option value="서초점">서초 지점</option>
-                                                            <option value="송파점">송파 지점</option>
-                                                            <option value="여의도점">여의도 지점</option>
-                                                            <option value="마포점">마포 지점</option>
-                                                            <option value="용인점">용인 지점</option>
-                                                            <option value="동탄점">동탄 지점</option>
-                                                        </select>
-                                                        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-400">
-                                                            <ChevronDown className="w-4 h-4" />
-                                                        </div>
-                                                    </div>
-                                                    {errors.region && (
-                                                        <p className="text-red-500 text-[11px] mt-1.5 font-semibold flex items-center gap-1">
-                                                            <X className="w-3 h-3" /> {errors.region}
-                                                        </p>
-                                                    )}
-                                                </div>
-
-                                                {/* 이용기간 필드 */}
-                                                <div key={shakeKeys.duration} className={errors.duration ? 'animate-shake' : ''}>
-                                                    <label htmlFor="modal-duration" className="block text-xs font-bold text-slate-600 mb-1.5 uppercase tracking-wide">
-                                                        이용기간 <span className="text-blue-500">*</span>
-                                                    </label>
-                                                    <div className="relative">
-                                                        <select id="modal-duration" name="duration" required value={form.duration} onChange={handleChange}
-                                                            className={`appearance-none w-full px-4 py-3.5 rounded-xl border bg-slate-50/50 hover:bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 transition-all text-slate-700 font-medium cursor-pointer
-                                                                ${errors.duration ? 'border-red-500 bg-red-50 text-red-900 focus:ring-red-500/30' : 'border-slate-200 focus:ring-blue-500/30 focus:border-blue-500'}`}>
-                                                            <option value="" disabled>선택해 주세요</option>
-                                                            <option value="3개월">3개월</option>
-                                                            <option value="6개월">6개월</option>
-                                                            <option value="12개월">12개월</option>
-                                                            <option value="24개월">24개월</option>
-                                                            <option value="36개월">36개월</option>
-                                                        </select>
-                                                        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-400">
-                                                            <ChevronDown className="w-4 h-4" />
-                                                        </div>
-                                                    </div>
-                                                    {errors.duration && (
-                                                        <p className="text-red-500 text-[11px] mt-1.5 font-semibold flex items-center gap-1">
-                                                            <X className="w-3 h-3" /> {errors.duration}
-                                                        </p>
-                                                    )}
-                                                </div>
-                                            </div>
-
-                                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                                                {/* 베네핏 필드 */}
-                                                <div key={shakeKeys.benefit} className={errors.benefit ? 'animate-shake' : ''}>
-                                                    <label htmlFor="modal-benefit" className="block text-xs font-bold text-slate-600 mb-1.5 uppercase tracking-wide">
-                                                        관심 베네핏 <span className="text-blue-500">*</span>
-                                                    </label>
-                                                    <div className="relative">
-                                                        <select id="modal-benefit" name="benefit" required value={form.benefit} onChange={handleChange}
-                                                            className={`appearance-none w-full px-4 py-3.5 rounded-xl border bg-slate-50/50 hover:bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 transition-all text-slate-700 font-medium cursor-pointer
-                                                                ${errors.benefit ? 'border-red-500 bg-red-50 text-red-900 focus:ring-red-500/30' : 'border-slate-200 focus:ring-blue-500/30 focus:border-blue-500'}`}>
-                                                            <option value="" disabled>선택해 주세요</option>
-                                                            <option value="비상주 패키지">🏢 비상주 패키지</option>
-                                                            <option value="세무기장 패키지">📊 세무기장 패키지</option>
-                                                            <option value="법인설립 패키지">📝 법인설립 패키지</option>
-                                                        </select>
-                                                        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-400">
-                                                            <ChevronDown className="w-4 h-4" />
-                                                        </div>
-                                                    </div>
-                                                    {errors.benefit && (
-                                                        <p className="text-red-500 text-[11px] mt-1.5 font-semibold flex items-center gap-1">
-                                                            <X className="w-3 h-3" /> {errors.benefit}
-                                                        </p>
-                                                    )}
-                                                </div>
-
-                                                {/* 우편물동의 필드 */}
-                                                <div key={shakeKeys.mailConsent} className={errors.mailConsent ? 'animate-shake' : ''}>
-                                                    <label htmlFor="modal-mailConsent" className="block text-xs font-bold text-slate-600 mb-1.5 uppercase tracking-wide">
-                                                        우편물개봉동의 <span className="text-blue-500">*</span>
-                                                    </label>
-                                                    <div className="relative">
-                                                        <select id="modal-mailConsent" name="mailConsent" required value={form.mailConsent} onChange={handleChange}
-                                                            className={`appearance-none w-full px-4 py-3.5 rounded-xl border bg-slate-50/50 hover:bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 transition-all text-slate-700 font-medium cursor-pointer
-                                                                ${errors.mailConsent ? 'border-red-500 bg-red-50 text-red-900 focus:ring-red-500/30' : 'border-slate-200 focus:ring-blue-500/30 focus:border-blue-500'}`}>
-                                                            <option value="" disabled>선택해 주세요</option>
-                                                            <option value="동의">✅ 동의</option>
-                                                            <option value="미동의">❌ 미동의</option>
-                                                        </select>
-                                                        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-400">
-                                                            <ChevronDown className="w-4 h-4" />
-                                                        </div>
-                                                    </div>
-                                                    {errors.mailConsent && (
-                                                        <p className="text-red-500 text-[11px] mt-1.5 font-semibold flex items-center gap-1">
-                                                            <X className="w-3 h-3" /> {errors.mailConsent}
-                                                        </p>
-                                                    )}
-                                                </div>
-                                            </div>
-
-                                            {/* 문의사항 */}
-                                            <div>
-                                                <label htmlFor="modal-message" className="block text-xs font-bold text-slate-600 mb-1.5 uppercase tracking-wide flex justify-between">
-                                                    <span>문의사항</span>
-                                                    <span className="text-slate-400 font-medium">(선택)</span>
+                                    {/* 스크롤 가능 폼 영역 (중앙) */}
+                                    <div className="flex-1 overflow-y-auto modal-scroll p-8 py-6 space-y-6 bg-white">
+                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-4">
+                                            {/* 성함 필드 */}
+                                            <div key={shakeKeys.name} className={`relative group mt-2 sm:mt-0 ${errors.name ? 'animate-shake' : ''}`}>
+                                                <input type="text" id="modal-name" name="name" placeholder=" " required aria-invalid={!!errors.name}
+                                                    ref={nameInputRef}
+                                                    value={form.name} onChange={handleChange}
+                                                    className={`peer w-full px-4 py-3.5 rounded-xl border bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 transition-all text-slate-800 font-medium placeholder-transparent
+                                                        ${errors.name ? 'border-red-500 bg-red-50 text-red-900 focus:ring-red-500/30' : 'border-slate-200 focus:ring-blue-500/30 focus:border-blue-500'}`} />
+                                                <label htmlFor="modal-name" className="absolute left-4 top-3.5 text-slate-400 text-sm font-medium transition-all duration-200 pointer-events-none peer-focus:-translate-y-6 peer-focus:text-xs peer-focus:text-blue-600 peer-focus:bg-white peer-focus:px-1 peer-[&:not(:placeholder-shown)]:-translate-y-6 peer-[&:not(:placeholder-shown)]:text-xs peer-[&:not(:placeholder-shown)]:bg-white peer-[&:not(:placeholder-shown)]:px-1">
+                                                    성함 <span className="text-blue-500 ml-0.5">*</span>
                                                 </label>
-                                                <textarea id="modal-message" name="message" rows={3} placeholder="추가로 궁금하신 사항이나 남기실 말씀을 자유롭게 적어주세요."
-                                                    value={form.message} onChange={handleChange}
-                                                    className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50/50 hover:bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 transition-all text-slate-700 font-medium placeholder-slate-400 resize-none"></textarea>
+                                                {errors.name && (
+                                                    <p className="text-red-500 text-[11px] mt-1.5 font-semibold flex items-center gap-1">
+                                                        <X className="w-3 h-3" /> <span>{errors.name}</span>
+                                                    </p>
+                                                )}
                                             </div>
 
-                                            {/* 약관 동의 */}
-                                            <div className="pt-2 bg-slate-50 p-4 rounded-xl border border-slate-100">
-                                                <label key={shakeKeys.agreement} className={`flex items-start cursor-pointer group mb-3 ${errors.agreement ? 'animate-shake' : ''}`}>
-                                                    <div className="relative flex items-center justify-center w-5 h-5 mt-0.5 mr-3 shrink-0">
-                                                        <input id="modal-agreement" name="agreement" type="checkbox" required aria-invalid={!!errors.agreement}
-                                                            checked={form.agreement} onChange={handleChange}
-                                                            className="peer appearance-none w-5 h-5 border-2 border-slate-300 rounded cursor-pointer checked:bg-blue-600 checked:border-blue-600 transition-all focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-blue-500/50" />
-                                                        <Check className="absolute w-3 h-3 text-white opacity-0 peer-checked:opacity-100 peer-checked:scale-100 scale-50 transition-all duration-200 pointer-events-none" strokeWidth={3} />
-                                                    </div>
-                                                    <div className="flex-1">
-                                                        <span className="text-[13px] font-bold text-slate-700 group-hover:text-slate-900 transition-colors">
-                                                            <span className="text-blue-600">[필수]</span> 상담을 위한 개인정보 수집 및 이용 동의
-                                                        </span>
-                                                        <a href="#" className="text-[11px] text-slate-400 ml-1 underline hover:text-slate-600" onClick={(e) => e.preventDefault()}>전문보기</a>
-                                                        {errors.agreement && (
-                                                            <p className="text-red-500 text-[11px] mt-1.5 font-semibold flex items-center gap-1">
-                                                                <X className="w-3 h-3" /> {errors.agreement}
-                                                            </p>
-                                                        )}
-                                                    </div>
+                                            {/* 연락처 필드 */}
+                                            <div key={shakeKeys.contact} className={`relative group mt-2 sm:mt-0 ${errors.contact ? 'animate-shake' : ''}`}>
+                                                <input type="tel" id="modal-contact" name="contact" placeholder=" " required aria-invalid={!!errors.contact} maxLength={13}
+                                                    value={form.contact} onChange={handleChange}
+                                                    className={`peer w-full px-4 py-3.5 rounded-xl border bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 transition-all text-slate-800 font-medium placeholder-transparent
+                                                        ${errors.contact ? 'border-red-500 bg-red-50 text-red-900 focus:ring-red-500/30' : 'border-slate-200 focus:ring-blue-500/30 focus:border-blue-500'}`} />
+                                                <label htmlFor="modal-contact" className="absolute left-4 top-3.5 text-slate-400 text-sm font-medium transition-all duration-200 pointer-events-none peer-focus:-translate-y-6 peer-focus:text-xs peer-focus:text-blue-600 peer-focus:bg-white peer-focus:px-1 peer-[&:not(:placeholder-shown)]:-translate-y-6 peer-[&:not(:placeholder-shown)]:text-xs peer-[&:not(:placeholder-shown)]:bg-white peer-[&:not(:placeholder-shown)]:px-1">
+                                                    연락처 <span className="text-blue-500 ml-0.5">*</span>
                                                 </label>
+                                                {errors.contact && (
+                                                    <p className="text-red-500 text-[11px] mt-1.5 font-semibold flex items-center gap-1">
+                                                        <X className="w-3 h-3 shrink-0" /> <span>{errors.contact}</span>
+                                                    </p>
+                                                )}
+                                            </div>
+                                        </div>
 
-                                                <label className="flex items-start cursor-pointer group">
-                                                    <div className="relative flex items-center justify-center w-5 h-5 mt-0.5 mr-3 shrink-0">
-                                                        <input id="modal-marketing" name="marketing" type="checkbox"
-                                                            checked={form.marketing} onChange={handleChange}
-                                                            className="peer appearance-none w-5 h-5 border-2 border-slate-300 rounded cursor-pointer checked:bg-blue-600 checked:border-blue-600 transition-all focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-blue-500/50" />
-                                                        <Check className="absolute w-3 h-3 text-white opacity-0 peer-checked:opacity-100 peer-checked:scale-100 scale-50 transition-all duration-200 pointer-events-none" strokeWidth={3} />
-                                                    </div>
-                                                    <div className="flex-1">
-                                                        <span className="text-[13px] font-bold text-slate-600 group-hover:text-slate-800 transition-colors">
-                                                            <span className="text-slate-400">[선택]</span> 맞춤형 혜택 및 마케팅 정보 수신 동의
-                                                        </span>
-                                                    </div>
+                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                                            {/* 지역 필드 */}
+                                            <div key={shakeKeys.region} className={errors.region ? 'animate-shake' : ''}>
+                                                <label htmlFor="modal-region" className="block text-xs font-bold text-slate-600 mb-1.5 uppercase tracking-wide">
+                                                    희망 지역 <span className="text-blue-500">*</span>
                                                 </label>
+                                                <div className="relative">
+                                                    <select id="modal-region" name="region" required value={form.region} onChange={handleChange}
+                                                        className={`appearance-none w-full px-4 py-3.5 rounded-xl border bg-slate-50/50 hover:bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 transition-all text-slate-700 font-medium cursor-pointer
+                                                            ${errors.region ? 'border-red-500 bg-red-50 text-red-900 focus:ring-red-500/30' : 'border-slate-200 focus:ring-blue-500/30 focus:border-blue-500'}`}>
+                                                        <option value="" disabled>선택해 주세요</option>
+                                                        <option value="강남점">강남 지점</option>
+                                                        <option value="서초점">서초 지점</option>
+                                                        <option value="송파점">송파 지점</option>
+                                                        <option value="여의도점">여의도 지점</option>
+                                                        <option value="마포점">마포 지점</option>
+                                                        <option value="용인점">용인 지점</option>
+                                                        <option value="동탄점">동탄 지점</option>
+                                                    </select>
+                                                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-400">
+                                                        <ChevronDown className="w-4 h-4" />
+                                                    </div>
+                                                </div>
+                                                {errors.region && (
+                                                    <p className="text-red-500 text-[11px] mt-1.5 font-semibold flex items-center gap-1">
+                                                        <X className="w-3 h-3" /> {errors.region}
+                                                    </p>
+                                                )}
                                             </div>
 
-                                            {/* CTA 버튼 (고정) */}
-                                            <div className="absolute bottom-0 left-0 right-0 p-6 pt-5 bg-white z-10 before:absolute before:inset-x-0 before:-top-6 before:h-6 before:bg-gradient-to-t before:from-white before:to-transparent border-t border-gray-50/50 rounded-b-3xl">
-                                                <button type="submit" disabled={isSubmitting}
-                                                    className={`w-full relative overflow-hidden group bg-slate-900 hover:bg-slate-800 text-white font-bold text-lg py-4 px-6 rounded-2xl transition-all duration-300 shadow-xl shadow-slate-900/10 flex justify-center items-center gap-2 focus:outline-none focus:ring-4 focus:ring-slate-900/20
-                                                        ${isSubmitting ? 'opacity-70 cursor-wait' : 'hover:-translate-y-0.5 active:translate-y-0 hover:shadow-slate-900/20'}`}>
+                                            {/* 이용기간 필드 */}
+                                            <div key={shakeKeys.duration} className={errors.duration ? 'animate-shake' : ''}>
+                                                <label htmlFor="modal-duration" className="block text-xs font-bold text-slate-600 mb-1.5 uppercase tracking-wide">
+                                                    이용기간 <span className="text-blue-500">*</span>
+                                                </label>
+                                                <div className="relative">
+                                                    <select id="modal-duration" name="duration" required value={form.duration} onChange={handleChange}
+                                                        className={`appearance-none w-full px-4 py-3.5 rounded-xl border bg-slate-50/50 hover:bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 transition-all text-slate-700 font-medium cursor-pointer
+                                                            ${errors.duration ? 'border-red-500 bg-red-50 text-red-900 focus:ring-red-500/30' : 'border-slate-200 focus:ring-blue-500/30 focus:border-blue-500'}`}>
+                                                        <option value="" disabled>선택해 주세요</option>
+                                                        <option value="3개월">3개월</option>
+                                                        <option value="6개월">6개월</option>
+                                                        <option value="12개월">12개월</option>
+                                                        <option value="24개월">24개월</option>
+                                                        <option value="36개월">36개월</option>
+                                                    </select>
+                                                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-400">
+                                                        <ChevronDown className="w-4 h-4" />
+                                                    </div>
+                                                </div>
+                                                {errors.duration && (
+                                                    <p className="text-red-500 text-[11px] mt-1.5 font-semibold flex items-center gap-1">
+                                                        <X className="w-3 h-3" /> {errors.duration}
+                                                    </p>
+                                                )}
+                                            </div>
+                                        </div>
 
-                                                    {isSubmitting ? (
-                                                        <>
-                                                            <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
-                                                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                                                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                                                            </svg>
-                                                            처리 중...
-                                                        </>
-                                                    ) : (
-                                                        <>
-                                                            <span className="relative z-10 flex items-center gap-2">
-                                                                빠른 상담 신청하기
-                                                                <svg className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                                                                </svg>
-                                                            </span>
-                                                            <style>{`
-                                                                @keyframes shimmer { 100% { transform: translateX(100%); } }
-                                                                .animate-shimmer { animation: shimmer 1.5s infinite; }
-                                                            `}</style>
-                                                            <div className="absolute inset-0 h-full w-full bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:animate-shimmer"></div>
-                                                        </>
+                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                                            {/* 베네핏 필드 */}
+                                            <div key={shakeKeys.benefit} className={errors.benefit ? 'animate-shake' : ''}>
+                                                <label htmlFor="modal-benefit" className="block text-xs font-bold text-slate-600 mb-1.5 uppercase tracking-wide">
+                                                    관심 베네핏 <span className="text-blue-500">*</span>
+                                                </label>
+                                                <div className="relative">
+                                                    <select id="modal-benefit" name="benefit" required value={form.benefit} onChange={handleChange}
+                                                        className={`appearance-none w-full px-4 py-3.5 rounded-xl border bg-slate-50/50 hover:bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 transition-all text-slate-700 font-medium cursor-pointer
+                                                            ${errors.benefit ? 'border-red-500 bg-red-50 text-red-900 focus:ring-red-500/30' : 'border-slate-200 focus:ring-blue-500/30 focus:border-blue-500'}`}>
+                                                        <option value="" disabled>선택해 주세요</option>
+                                                        <option value="비상주 패키지">🏢 비상주 패키지</option>
+                                                        <option value="세무기장 패키지">📊 세무기장 패키지</option>
+                                                        <option value="법인설립 패키지">📝 법인설립 패키지</option>
+                                                    </select>
+                                                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-400">
+                                                        <ChevronDown className="w-4 h-4" />
+                                                    </div>
+                                                </div>
+                                                {errors.benefit && (
+                                                    <p className="text-red-500 text-[11px] mt-1.5 font-semibold flex items-center gap-1">
+                                                        <X className="w-3 h-3" /> {errors.benefit}
+                                                    </p>
+                                                )}
+                                            </div>
+
+                                            {/* 우편물동의 필드 */}
+                                            <div key={shakeKeys.mailConsent} className={errors.mailConsent ? 'animate-shake' : ''}>
+                                                <label htmlFor="modal-mailConsent" className="block text-xs font-bold text-slate-600 mb-1.5 uppercase tracking-wide">
+                                                    우편물개봉동의 <span className="text-blue-500">*</span>
+                                                </label>
+                                                <div className="relative">
+                                                    <select id="modal-mailConsent" name="mailConsent" required value={form.mailConsent} onChange={handleChange}
+                                                        className={`appearance-none w-full px-4 py-3.5 rounded-xl border bg-slate-50/50 hover:bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 transition-all text-slate-700 font-medium cursor-pointer
+                                                            ${errors.mailConsent ? 'border-red-500 bg-red-50 text-red-900 focus:ring-red-500/30' : 'border-slate-200 focus:ring-blue-500/30 focus:border-blue-500'}`}>
+                                                        <option value="" disabled>선택해 주세요</option>
+                                                        <option value="동의">✅ 동의</option>
+                                                        <option value="미동의">❌ 미동의</option>
+                                                    </select>
+                                                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-400">
+                                                        <ChevronDown className="w-4 h-4" />
+                                                    </div>
+                                                </div>
+                                                {errors.mailConsent && (
+                                                    <p className="text-red-500 text-[11px] mt-1.5 font-semibold flex items-center gap-1">
+                                                        <X className="w-3 h-3" /> {errors.mailConsent}
+                                                    </p>
+                                                )}
+                                            </div>
+                                        </div>
+
+                                        {/* 문의사항 */}
+                                        <div>
+                                            <label htmlFor="modal-message" className="block text-xs font-bold text-slate-600 mb-1.5 uppercase tracking-wide flex justify-between">
+                                                <span>문의사항</span>
+                                                <span className="text-slate-400 font-medium">(선택)</span>
+                                            </label>
+                                            <textarea id="modal-message" name="message" rows={3} placeholder="추가로 궁금하신 사항이나 남기실 말씀을 자유롭게 적어주세요."
+                                                value={form.message} onChange={handleChange}
+                                                className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50/50 hover:bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 transition-all text-slate-700 font-medium placeholder-slate-400 resize-none"></textarea>
+                                        </div>
+
+                                        {/* 약관 동의 */}
+                                        <div className="p-4 rounded-xl border border-slate-100 bg-slate-50">
+                                            <label key={shakeKeys.agreement} className={`flex items-start cursor-pointer group mb-3 last:mb-0 ${errors.agreement ? 'animate-shake' : ''}`}>
+                                                <div className="relative flex items-center justify-center w-5 h-5 mt-0.5 mr-3 shrink-0">
+                                                    <input id="modal-agreement" name="agreement" type="checkbox" required aria-invalid={!!errors.agreement}
+                                                        checked={form.agreement} onChange={handleChange}
+                                                        className="peer appearance-none w-5 h-5 border-2 border-slate-300 rounded cursor-pointer checked:bg-blue-600 checked:border-blue-600 transition-all focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-blue-500/50" />
+                                                    <Check className="absolute w-3 h-3 text-white opacity-0 peer-checked:opacity-100 peer-checked:scale-100 scale-50 transition-all duration-200 pointer-events-none" strokeWidth={3} />
+                                                </div>
+                                                <div className="flex-1">
+                                                    <span className="text-[13px] font-bold text-slate-700 group-hover:text-slate-900 transition-colors">
+                                                        <span className="text-blue-600">[필수]</span> 상담을 위한 개인정보 수집 및 이용 동의
+                                                    </span>
+                                                    <a href="#" className="text-[11px] text-slate-400 ml-1 underline hover:text-slate-600 font-medium" onClick={(e) => e.preventDefault()}>전문보기</a>
+                                                    {errors.agreement && (
+                                                        <p className="text-red-500 text-[11px] mt-1.5 font-semibold flex items-center gap-1">
+                                                            <X className="w-3 h-3" /> {errors.agreement}
+                                                        </p>
                                                     )}
-                                                </button>
-                                            </div>
-                                        </form>
+                                                </div>
+                                            </label>
+
+                                            <label className="flex items-start cursor-pointer group">
+                                                <div className="relative flex items-center justify-center w-5 h-5 mt-0.5 mr-3 shrink-0">
+                                                    <input id="modal-marketing" name="marketing" type="checkbox"
+                                                        checked={form.marketing} onChange={handleChange}
+                                                        className="peer appearance-none w-5 h-5 border-2 border-slate-300 rounded cursor-pointer checked:bg-blue-600 checked:border-blue-600 transition-all focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-blue-500/50" />
+                                                    <Check className="absolute w-3 h-3 text-white opacity-0 peer-checked:opacity-100 peer-checked:scale-100 scale-50 transition-all duration-200 pointer-events-none" strokeWidth={3} />
+                                                </div>
+                                                <div className="flex-1">
+                                                    <span className="text-[13px] font-bold text-slate-600 group-hover:text-slate-800 transition-colors">
+                                                        <span className="text-slate-400">[선택]</span> 맞춤형 혜택 및 마케팅 정보 수신 동의
+                                                    </span>
+                                                </div>
+                                            </label>
+                                        </div>
                                     </div>
-                                </>
+
+                                    {/* CTA 버튼 영역 (고정 하단) */}
+                                    <div className="p-6 shrink-0 bg-white border-t border-slate-100 shadow-[0_-8px_30px_rgba(0,0,0,0.04)]">
+                                        <button type="submit" disabled={isSubmitting}
+                                            className={`w-full relative overflow-hidden group bg-slate-900 hover:bg-slate-800 text-white font-bold text-lg py-4 px-6 rounded-2xl transition-all duration-300 shadow-xl shadow-slate-900/10 flex justify-center items-center gap-2 focus:outline-none focus:ring-4 focus:ring-slate-900/20
+                                                ${isSubmitting ? 'opacity-70 cursor-wait' : 'hover:-translate-y-0.5 active:translate-y-0 hover:shadow-slate-900/20'}`}>
+
+                                            {isSubmitting ? (
+                                                <>
+                                                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
+                                                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                                    </svg>
+                                                    처리 중...
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <span className="relative z-10 flex items-center gap-2">
+                                                        빠른 상담 신청하기
+                                                        <svg className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                                                        </svg>
+                                                    </span>
+                                                    <div className="absolute inset-0 h-full w-full bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:animate-shimmer"></div>
+                                                </>
+                                            )}
+                                        </button>
+                                    </div>
+                                </form>
                             ) : (
                                 /* 제출 완료 메시지 */
                                 <motion.div
