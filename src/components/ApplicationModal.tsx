@@ -286,7 +286,7 @@ export default function ApplicationModal({ isOpen, onClose }: ApplicationModalPr
                                     </div>
 
                                     {/* 스크롤 가능 폼 영역 */}
-                                    <div className="p-8 pt-2 overflow-y-auto modal-scroll relative bg-white pb-28">
+                                    <div className="p-8 pt-2 overflow-y-auto modal-scroll relative bg-white pb-36 sm:pb-32">
                                         <form onSubmit={handleSubmit} className="space-y-6" noValidate>
 
                                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-4">
