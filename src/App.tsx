@@ -16,17 +16,31 @@ import ApplicationModal from './components/ApplicationModal';
 import PolicyModal from './components/PolicyModal';
 import type { PolicyType } from './components/PolicyModal';
 import Footer from './components/Footer';
-import { Analytics } from '@vercel/analytics/react';
-import { SpeedInsights } from '@vercel/speed-insights/react';
+// import { Analytics } from '@vercel/analytics/react';
+// import { SpeedInsights } from '@vercel/speed-insights/react';
+import { useEffect } from 'react';
 
 export default function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activePolicy, setActivePolicy] = useState<PolicyType>(null);
 
+  useEffect(() => {
+    // UTM 파라미터 캡처 및 세션 저장 로직
+    const urlParams = new URLSearchParams(window.location.search);
+    const utms = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'];
+    
+    utms.forEach(param => {
+      const value = urlParams.get(param);
+      if (value) {
+        sessionStorage.setItem(param, value);
+      }
+    });
+  }, []);
+
   return (
     <main className="min-h-screen bg-[#fafafa] flex flex-col font-sans relative">
-      <Analytics />
-      <SpeedInsights />
+      {/* <Analytics />
+      <SpeedInsights /> */}
       <HeroSection onOpenModal={() => setIsModalOpen(true)} />
       <TrustSection />
 

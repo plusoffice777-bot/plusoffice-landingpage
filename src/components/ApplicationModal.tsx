@@ -163,6 +163,13 @@ export default function ApplicationModal({ isOpen, onClose }: ApplicationModalPr
             }
 
             try {
+                // UTM 데이터 추출
+                const utmData: Record<string, string> = {};
+                ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'].forEach(key => {
+                    const val = sessionStorage.getItem(key);
+                    if (val) utmData[key] = val;
+                });
+
                 // 비동기 처리를 위한 데이터 정리
                 const payload = {
                     fields: {
@@ -175,7 +182,14 @@ export default function ApplicationModal({ isOpen, onClose }: ApplicationModalPr
                         "⛔관심 베네핏": form.benefit,
                         "⛔문의내용(비고)": form.message,
                         "⛔개인정보수집동의": form.agreement ? "동의" : "미동의",
-                        "⛔마케팅수신동의": form.marketing ? "동의" : "미동의"
+                        "⛔마케팅수신동의": form.marketing ? "동의" : "미동의",
+                        // UTM 정보 추가 (에어테이블에 해당 컬럼 필요)
+                        "utm_source": utmData.utm_source || '',
+                        "utm_medium": utmData.utm_medium || '',
+                        "utm_campaign": utmData.utm_campaign || '',
+                        "utm_term": utmData.utm_term || '',
+                        "utm_content": utmData.utm_content || '',
+                        "landing_url": window.location.href.split('?')[0]
                     },
                     typecast: true
                 };

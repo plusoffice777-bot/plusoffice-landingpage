@@ -212,7 +212,7 @@ export default function PricingSection() {
                                             variants={itemVariants}
                                             whileHover={{ y: -8 }}
                                             className={`
-                                                relative p-6 md:p-8 rounded-2xl md:rounded-3xl bg-white transition-all duration-300
+                                                relative p-5 lg:p-4 xl:p-6 rounded-2xl md:rounded-3xl bg-white transition-all duration-300
                                                 flex flex-col justify-between
                                                 ${plan.isBest
                                                     ? 'ring-2 ring-blue-500 shadow-xl shadow-blue-500/10 scale-100 lg:scale-105 z-10'
@@ -236,18 +236,18 @@ export default function PricingSection() {
                                                 <div className="flex flex-col gap-1">
                                                     {/* 기존 가격 (할인 전) */}
                                                     {plan.originalPrice && (
-                                                        <span className="text-sm text-gray-400 line-through">
+                                                        <span className="text-sm text-gray-400 line-through whitespace-nowrap">
                                                             <span className="sr-only">기존 가격:</span>월 {plan.originalPrice}원
                                                         </span>
                                                     )}
 
                                                     {/* 현재 가격 */}
                                                     <div className="flex items-end gap-1 flex-wrap">
-                                                        <span className={`text-2xl md:text-3xl font-bold tracking-tight ${plan.isBest ? 'text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-cyan-400' : 'text-gray-900'}`}>
+                                                        <span className={`text-2xl lg:text-[1.35rem] xl:text-2xl 2xl:text-3xl font-extrabold tracking-tighter whitespace-nowrap ${plan.isBest ? 'text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-cyan-400' : 'text-gray-900'}`} style={{ wordBreak: 'keep-all' }}>
                                                             <span className="sr-only">할인 가격:</span>월 {plan.price}원
                                                         </span>
                                                         {plan.suffix && (
-                                                            <span className={`text-sm md:text-base font-bold ${plan.isBest ? 'text-blue-500' : 'text-blue-600'}`}>
+                                                            <span className={`text-sm md:text-base font-bold whitespace-nowrap ${plan.isBest ? 'text-blue-500' : 'text-blue-600'}`}>
                                                                 {plan.suffix}
                                                             </span>
                                                         )}
