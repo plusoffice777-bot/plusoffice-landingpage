@@ -302,8 +302,8 @@ export default function HeroSection({ onOpenModal }: HeroSectionProps) {
 
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 text-center w-full max-w-[800px] pointer-events-none">
 
-                    <h1 className="text-3xl md:text-5xl lg:text-[clamp(2rem,5vw,4.5rem)] font-extrabold text-[#111] leading-tight tracking-tight pointer-events-auto shadow-[0_4px_30px_rgba(255,255,255,0.9)] mb-6">
-                        초기 창업 비용,<br className="md:hidden" /> 이제 성장에 투자하세요.
+                    <h1 className="text-3xl md:text-5xl lg:text-[clamp(2rem,5vw,4.5rem)] font-extrabold text-[#111] leading-tight tracking-tight pointer-events-auto shadow-[0_4px_30px_rgba(255,255,255,0.9)] mb-6 break-keep">
+                        초기 창업 비용, 이제 성장에<br />투자하세요.
                     </h1>
                     <p className="text-base md:text-xl lg:text-2xl text-gray-700 font-medium tracking-tight break-keep pointer-events-auto max-w-2xl mx-auto shadow-[0_4px_30px_rgba(255,255,255,0.9)]">
                         강남 및 주요 역세권 주소지를 <strong className="font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-cyan-400">월 1만원대</strong>로 이용하고 비즈니스 신뢰도를 높이세요.
