@@ -1,0 +1,37 @@
+name: Airtable Monitor
+
+on:
+  schedule:
+    # 매 30분마다 실행 (UTC 기준, 한국 시간 무관하게 간격 유지)
+    - cron: '*/30 * * * *'
+  workflow_dispatch: # 수동 실행 버튼 활성화
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          cd monitor_system
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run Monitoring Script
+        env:
+          AIRTABLE_BASE_ID: ${{ secrets.AIRTABLE_BASE_ID }}
+          AIRTABLE_TABLE_NAME: ${{ secrets.AIRTABLE_TABLE_NAME }}
+          AIRTABLE_PAT: ${{ secrets.AIRTABLE_PAT }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          cd monitor_system
+          python monitor_submission.py
