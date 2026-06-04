@@ -13,6 +13,7 @@ import ReviewSection from './components/ReviewSection';
 import FAQSection from './components/FAQSection';
 import CTASection from './components/CTASection';
 import ApplicationModal from './components/ApplicationModal';
+import PaymentTestModal from './components/PaymentTestModal';
 import PolicyModal from './components/PolicyModal';
 import type { PolicyType } from './components/PolicyModal';
 import Footer from './components/Footer';
@@ -23,10 +24,16 @@ import { useEffect } from 'react';
 export default function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activePolicy, setActivePolicy] = useState<PolicyType>(null);
+  const [isTestPayment, setIsTestPayment] = useState(false);
 
   useEffect(() => {
     // UTM 파라미터 캡처 및 세션 저장 로직
     const urlParams = new URLSearchParams(window.location.search);
+    
+    if (urlParams.get('test_payment') === 'true') {
+      setIsTestPayment(true);
+    }
+
     const utms = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'];
     
     utms.forEach(param => {
@@ -84,8 +91,12 @@ export default function App() {
       {/* 7. 푸터 */}
       <Footer onOpenPolicy={(type) => setActivePolicy(type)} />
 
-      {/* 8. 신청 모달 (ApplicationModal) */}
-      <ApplicationModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      {/* 8. 신청 모달 (ApplicationModal or PaymentTestModal) */}
+      {isTestPayment ? (
+        <PaymentTestModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      ) : (
+        <ApplicationModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      )}
 
       {/* 9. 약관 모달 (PolicyModal) */}
       <PolicyModal type={activePolicy} onClose={() => setActivePolicy(null)} />
