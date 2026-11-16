@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, Check, ChevronDown } from 'lucide-react';
+import { submitLead } from '../lib/submitLead';
 
 declare global {
     interface Window {
@@ -137,62 +138,9 @@ export default function PaymentTestModal({ isOpen, onClose }: PaymentTestModalPr
     };
 
     const submitToAirtable = async () => {
-        const creds = {
-            baseId: import.meta.env.VITE_AIRTABLE_BASE_ID,
-            tableName: import.meta.env.VITE_AIRTABLE_TABLE_NAME,
-            pat: import.meta.env.VITE_AIRTABLE_PAT
-        };
-
-        if (!creds.baseId || !creds.tableName || !creds.pat) {
-            console.warn('Airtable credentials missing. Simulation mode.');
-            await new Promise(resolve => setTimeout(resolve, 600));
-            setIsSuccess(true);
-            return;
-        }
-
-        const utmData: Record<string, string> = {};
-        ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'].forEach(key => {
-            const val = sessionStorage.getItem(key);
-            if (val) utmData[key] = val;
-        });
-
-        const payload = {
-            fields: {
-                "⛔유입경로": "홈페이지(테스트결제)",
-                "⛔성함": form.name,
-                "⛔연락처": form.contact,
-                "⛔지점": form.region,
-                "⛔계약기간": form.duration,
-                "⛔우편물개봉동의": form.mailConsent,
-                "⛔관심 베네핏": form.benefit,
-                "⛔문의내용(비고)": form.message,
-                "⛔개인정보수집동의": form.agreement ? "동의" : "미동의",
-                "⛔마케팅수신동의": form.marketing ? "동의" : "미동의",
-                "utm_source": utmData.utm_source || '',
-                "utm_medium": utmData.utm_medium || '',
-                "utm_campaign": utmData.utm_campaign || '',
-                "utm_term": utmData.utm_term || '',
-                "utm_content": utmData.utm_content || '',
-                "landing_url": window.location.href.split('?')[0]
-            },
-            typecast: true
-        };
-
-        const response = await fetch(`https://api.airtable.com/v0/${creds.baseId}/${encodeURIComponent(creds.tableName)}`, {
-            method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${creds.pat}`,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(payload)
-        });
-
-        if (response.ok) {
-            setIsSuccess(true);
-        } else {
-            const errorData = await response.json();
-            throw new Error(errorData.error?.message || 'Airtable Error');
-        }
+        // 서버 함수(/api/submit-lead)가 에어테이블에 기록한다 (토큰은 서버에만 있음)
+        await submitLead(form, 'homepage_test_payment');
+        setIsSuccess(true);
     };
 
     const handleSubmit = async (e: React.FormEvent) => {

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, Check, ChevronDown } from 'lucide-react';
+import { submitLead } from '../lib/submitLead';
 
 interface ApplicationModalProps {
     isOpen: boolean;
@@ -147,78 +148,13 @@ export default function ApplicationModal({ isOpen, onClose }: ApplicationModalPr
         if (validate()) {
             setIsSubmitting(true);
 
-            // 미리 환경변수 로드 (약간의 속도 향상)
-            const creds = {
-                baseId: import.meta.env.VITE_AIRTABLE_BASE_ID,
-                tableName: import.meta.env.VITE_AIRTABLE_TABLE_NAME,
-                pat: import.meta.env.VITE_AIRTABLE_PAT
-            };
-
-            if (!creds.baseId || !creds.tableName || !creds.pat) {
-                console.warn('Airtable credentials missing. Simulation mode.');
-                await new Promise(resolve => setTimeout(resolve, 600));
-                setIsSubmitting(false);
-                setIsSuccess(true);
-                return;
-            }
-
             try {
-                // UTM 데이터 추출
-                const utmData: Record<string, string> = {};
-                ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'].forEach(key => {
-                    const val = sessionStorage.getItem(key);
-                    if (val) utmData[key] = val;
-                });
-
-                // 비동기 처리를 위한 데이터 정리
-                const payload = {
-                    fields: {
-                        "⛔유입경로": "홈페이지",
-                        "⛔성함": form.name,
-                        "⛔연락처": form.contact,
-                        "⛔지점": form.region,
-                        "⛔계약기간": form.duration,
-                        "⛔우편물개봉동의": form.mailConsent,
-                        "⛔관심 베네핏": form.benefit,
-                        "⛔문의내용(비고)": form.message,
-                        "⛔개인정보수집동의": form.agreement ? "동의" : "미동의",
-                        "⛔마케팅수신동의": form.marketing ? "동의" : "미동의",
-                        // UTM 정보 추가 (에어테이블에 해당 컬럼 필요)
-                        "utm_source": utmData.utm_source || '',
-                        "utm_medium": utmData.utm_medium || '',
-                        "utm_campaign": utmData.utm_campaign || '',
-                        "utm_term": utmData.utm_term || '',
-                        "utm_content": utmData.utm_content || '',
-                        "landing_url": window.location.href.split('?')[0]
-                    },
-                    typecast: true
-                };
-
-                const response = await fetch(`https://api.airtable.com/v0/${creds.baseId}/${encodeURIComponent(creds.tableName)}`, {
-                    method: 'POST',
-                    headers: {
-                        'Authorization': `Bearer ${creds.pat}`,
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(payload)
-                });
-
-                if (response.ok) {
-                    setIsSuccess(true);
-                } else {
-                    const errorData = await response.json();
-                    const errorMsg = errorData.error?.message || 'Airtable 설정 오류가 발생했습니다.';
-                    const debugInfo = `\n\n(ID: ${creds.baseId?.substring(0, 5)}...)`;
-
-                    if (errorMsg.includes('select option')) {
-                        alert(`항목 불일치: 에어테이블의 필드 설정을 확인해 주세요.${debugInfo}`);
-                    } else {
-                        alert(`신청 중 오류가 발생했습니다: ${errorMsg}${debugInfo}`);
-                    }
-                }
+                // 서버 함수(/api/submit-lead)가 에어테이블에 기록한다 (토큰은 서버에만 있음)
+                await submitLead(form, 'homepage');
+                setIsSuccess(true);
             } catch (error) {
                 console.error('Submission Error:', error);
-                alert('네트워크 연결이 불안정합니다. 잠시 후 다시 시도해 주세요.');
+                alert(error instanceof Error ? error.message : '네트워크 연결이 불안정합니다. 잠시 후 다시 시도해 주세요.');
             } finally {
                 setIsSubmitting(false);
             }
