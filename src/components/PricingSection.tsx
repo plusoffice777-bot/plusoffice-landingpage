@@ -35,7 +35,7 @@ const PACKAGE_DATA: Record<TabId, PackageInfo> = {
         banner: {
             badge: '월 15,000원 부터',
             title: '비상주 패키지',
-            desc: '거품을 뺀 정직한 가격. 플러스오피스 최저가 보장제',
+            desc: '거품을 뺀 정직한 가격. 길게 쓸수록 월 요금이 내려갑니다.',
         },
         plans: [
             { months: 3, originalPrice: '', price: '40,000', total: '120,000', isBest: false, suffix: '' },
@@ -58,13 +58,13 @@ const PACKAGE_DATA: Record<TabId, PackageInfo> = {
     },
     corp: {
         banner: {
-            badge: '50만원 상당 혜택',
+            badge: '법인설립 대행 수수료 무료',
             title: '법인설립 패키지',
-            desc: '비상주사무실과 세무기장서비스를 함께 이용하면 법인설립 100% 무료',
+            desc: '비상주사무실과 세무기장서비스를 함께 이용하면 법인설립 대행 수수료 무료 (등록면허세 등 공과금·세금 별도)',
         },
         plans: [
-            { months: 12, originalPrice: '', price: '20,000', total: '240,000', originalTotal: '240,000+500,000', isBest: false, suffix: '+ 무료법인설립' },
-            { months: 24, originalPrice: '', price: '18,000', total: '432,000', originalTotal: '432,000+500,000', isBest: true, suffix: '+ 무료법인설립' },
+            { months: 12, originalPrice: '', price: '20,000', total: '240,000', originalTotal: '240,000+500,000', isBest: false, suffix: '+ 법인설립 대행 무료' },
+            { months: 24, originalPrice: '', price: '18,000', total: '432,000', originalTotal: '432,000+500,000', isBest: true, suffix: '+ 법인설립 대행 무료' },
         ]
     }
 };
@@ -102,7 +102,7 @@ export default function PricingSection() {
                         className="text-center mb-[40px] md:mb-[50px] lg:mb-[60px]"
                     >
                         <h2 id="pricing-heading" className="text-3xl md:text-5xl lg:text-[clamp(1.875rem,5vw,3rem)] font-bold tracking-tight leading-tight text-gray-900 mb-6 whitespace-pre-line break-keep">
-                            {'플러스 오피스만의\n국내 최저가 요금제!'}
+                            {'개인도 법인도\n같은 가격, 추가 요금 없이'}
                         </h2>
                         <p className="text-sm md:text-lg text-gray-500 leading-relaxed max-w-2xl mx-auto break-keep">
                             사업 단계에 딱 맞는 패키지를 선택하세요. 길게 이용할수록 할인율이 커집니다.
@@ -252,6 +252,7 @@ export default function PricingSection() {
                                                             </span>
                                                         )}
                                                     </div>
+                                                    <span className="text-[11px] text-gray-400">VAT 별도</span>
                                                 </div>
                                             </header>
 

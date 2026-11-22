@@ -65,6 +65,13 @@ export default function Footer({ onOpenPolicy }: FooterProps) {
                         >
                             개인정보처리방침
                         </button>
+                        <button
+                            onClick={() => onOpenPolicy('refund')}
+                            className="hover:text-gray-900 hover:underline transition-colors focus:outline-none focus:ring-2 focus:ring-gray-300 rounded"
+                            aria-label="환불정책 보기"
+                        >
+                            환불정책
+                        </button>
                     </div>
                 </div>
             </div>

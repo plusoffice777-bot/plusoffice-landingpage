@@ -295,8 +295,8 @@ export default function HeroSection({ onOpenModal }: HeroSectionProps) {
                         <a href="tel:1551-5586" className="text-gray-900 font-bold text-[13px] sm:text-[15px] hover:text-blue-500 transition-colors mr-0 sm:mr-3 whitespace-nowrap" aria-label="대표전화로 전화걸기">
                             1551-5586
                         </a>
-                        <a href="http://pf.kakao.com/_xnWMwG" target="_blank" rel="noopener noreferrer" className="hidden sm:inline-flex items-center justify-center font-inherit text-sm font-semibold px-4 py-2 min-h-[40px] rounded-full cursor-pointer transition-all border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 hover:shadow-sm no-underline" aria-label="카카오톡 1:1 문의하기">1:1 문의</a>
-                        <button onClick={onOpenModal} className="font-inherit text-[13px] sm:text-sm font-bold px-4 sm:px-5 py-2 sm:py-2.5 min-h-[36px] sm:min-h-[40px] rounded-full cursor-pointer transition-all border-none bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-[0_4px_10px_rgba(37,99,235,0.2)] hover:shadow-[0_6px_15px_rgba(37,99,235,0.3)] hover:-translate-y-0.5" aria-label="신청하기">신청하기</button>
+                        <a href="https://pf.kakao.com/_xnWMwG" target="_blank" rel="noopener noreferrer" className="hidden sm:inline-flex items-center justify-center font-inherit text-sm font-semibold px-4 py-2 min-h-[40px] rounded-full cursor-pointer transition-all border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 hover:shadow-sm no-underline" aria-label="카카오톡 1:1 문의하기">1:1 문의</a>
+                        <button onClick={onOpenModal} className="font-inherit text-[13px] sm:text-sm font-bold px-4 sm:px-5 py-2 sm:py-2.5 min-h-[36px] sm:min-h-[40px] rounded-full cursor-pointer transition-all border-none bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-[0_4px_10px_rgba(37,99,235,0.2)] hover:shadow-[0_6px_15px_rgba(37,99,235,0.3)] hover:-translate-y-0.5" aria-label="빠른 상담 신청">빠른 상담 신청</button>
                     </div>
                 </header>
 
@@ -306,18 +306,18 @@ export default function HeroSection({ onOpenModal }: HeroSectionProps) {
                         초기 창업 비용, 이제 성장에<br />투자하세요.
                     </h1>
                     <p className="text-base md:text-xl lg:text-2xl text-gray-700 font-medium tracking-tight break-keep pointer-events-auto max-w-2xl mx-auto shadow-[0_4px_30px_rgba(255,255,255,0.9)]">
-                        강남 및 주요 역세권 주소지를 <strong className="font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-cyan-400">월 1만원대</strong>로 이용하고 비즈니스 신뢰도를 높이세요.
+                        강남 및 주요 역세권 주소지를 <strong className="font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-cyan-400">월 1만원대부터</strong> 이용하고 비즈니스 신뢰도를 높이세요. <span className="text-xs md:text-sm text-gray-500 font-normal">(36개월 기준, VAT 별도)</span>
                     </p>
 
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-4 mt-8 md:mt-10 pointer-events-auto px-6">
                         <button
                             onClick={onOpenModal}
                             className="px-8 py-4 bg-gray-900 text-white text-base font-bold rounded-2xl shadow-[0_8px_0_rgb(31,41,55),0_15px_20px_rgba(0,0,0,0.15)] active:shadow-[0_2px_0_rgb(31,41,55),0_5px_10px_rgba(0,0,0,0.15)] active:translate-y-[6px] hover:-translate-y-1 hover:shadow-[0_12px_0_rgb(31,41,55),0_20px_25px_rgba(0,0,0,0.2)] transition-all duration-150 w-full sm:w-[200px]"
-                            aria-label="빠른 신청하기 폼 열기">
-                            빠른 신청하기
+                            aria-label="빠른 상담 신청 폼 열기">
+                            빠른 상담 신청
                         </button>
                         <a
-                            href="http://pf.kakao.com/_xnWMwG"
+                            href="https://pf.kakao.com/_xnWMwG"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="inline-flex items-center justify-center px-8 py-4 bg-white text-gray-900 text-base font-bold rounded-2xl shadow-[0_8px_0_rgb(229,231,235),0_15px_20px_rgba(0,0,0,0.05)] active:shadow-[0_2px_0_rgb(229,231,235),0_5px_10px_rgba(0,0,0,0.05)] active:translate-y-[6px] hover:-translate-y-1 hover:shadow-[0_12px_0_rgb(229,231,235),0_20px_25px_rgba(0,0,0,0.1)] border border-gray-100 transition-all duration-150 w-full sm:w-[200px] no-underline"

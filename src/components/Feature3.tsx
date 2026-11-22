@@ -37,7 +37,7 @@ export default function Feature3() {
 
                         <div className="space-y-6">
                             <FeatureItem text="24시간 언제든 비대면 계약 진행" delay={0.1} />
-                            <FeatureItem text="단 5분 만에 법적 효력 100% 보장" delay={0.2} />
+                            <FeatureItem text="비대면으로 5분이면 계약 완료" delay={0.2} />
                             <FeatureItem text="번거로운 신용카드 등록 절차 NO" delay={0.3} />
                             <FeatureItem text="네이버페이·카카오페이 간편 결제 OK" delay={0.4} />
                         </div>

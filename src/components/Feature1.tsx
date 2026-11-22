@@ -134,14 +134,14 @@ const Step3 = () => (
                     <span className="text-gray-500">발송처</span>
                     <span className="text-gray-100 font-medium">국세청</span>
                     <span className="text-gray-500">제목</span>
-                    <span className="text-gray-100 font-medium">2023년 2기 확정 부가가치세 신고 안내</span>
+                    <span className="text-gray-100 font-medium">부가가치세 확정신고 안내</span>
                 </div>
 
                 <div className="p-4 bg-black/40 rounded-xl border border-white/5 mt-4">
                     <ul className="space-y-2">
                         <li className="flex items-start gap-2">
                             <div className="w-1.5 h-1.5 rounded-full bg-blue-400 mt-1.5" />
-                            <span><strong>신고 기한:</strong> 2026년 1월 25일까지</span>
+                            <span><strong>신고 기한:</strong> 1월 25일까지</span>
                         </li>
                         <li className="flex items-start gap-2">
                             <div className="w-1.5 h-1.5 rounded-full bg-blue-400 mt-1.5" />
@@ -201,7 +201,7 @@ export default function Feature1() {
                         대표님만의 우편 관리<br className="hidden md:block" />시스템을 제공합니다.
                     </h1>
                     <p className="text-sm md:text-lg text-gray-500 leading-relaxed max-w-lg break-keep">
-                        중요 우편물 도착 즉시 알림톡을 발송해 드립니다. 편리한 스캔 서비스로 어디서 보낸 우편물인지 그리고 내용물 까지 모두 스캔해서 전달드립니다.<br />
+                        중요 우편물 도착 당일 알림톡을 발송해 드립니다. 편리한 스캔 서비스로 어디서 보낸 우편물인지 그리고 내용물 까지 모두 스캔해서 전달드립니다.<br />
                         비상주 서비스의 핵심은 믿을 수 있는 우편 관리 시스템 입니다.
                     </p>
                 </div>

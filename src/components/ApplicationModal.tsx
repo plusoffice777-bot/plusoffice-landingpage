@@ -2,10 +2,12 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, Check, ChevronDown } from 'lucide-react';
 import { submitLead } from '../lib/submitLead';
+import { track, toMonths } from '../lib/analytics';
 
 interface ApplicationModalProps {
     isOpen: boolean;
     onClose: () => void;
+    onOpenPrivacy?: () => void;
 }
 
 interface FormState {
@@ -20,7 +22,7 @@ interface FormState {
     marketing: boolean;
 }
 
-export default function ApplicationModal({ isOpen, onClose }: ApplicationModalProps) {
+export default function ApplicationModal({ isOpen, onClose, onOpenPrivacy }: ApplicationModalProps) {
     const defaultFormState: FormState = {
         name: '',
         contact: '',
@@ -151,6 +153,13 @@ export default function ApplicationModal({ isOpen, onClose }: ApplicationModalPr
             try {
                 // 서버 함수(/api/submit-lead)가 에어테이블에 기록한다 (토큰은 서버에만 있음)
                 await submitLead(form, 'homepage');
+                // 광고 전환 측정: 서버 저장 성공 후에만, 개인정보 없이 보낸다
+                track('generate_lead', {
+                    branch: form.region,
+                    period_months: toMonths(form.duration),
+                    package: form.benefit,
+                    lead_source: 'homepage',
+                });
                 setIsSuccess(true);
             } catch (error) {
                 console.error('Submission Error:', error);
@@ -222,7 +231,7 @@ export default function ApplicationModal({ isOpen, onClose }: ApplicationModalPr
                                                 <span className="w-1.5 h-1.5 bg-blue-600 rounded-full animate-pulse"></span>
                                                 Premium Service
                                             </span>
-                                            <h2 id="modal-title" className="text-2xl sm:text-3xl font-bold text-slate-900 mb-2 tracking-tight">맞춤형 컨설팅 신청</h2>
+                                            <h2 id="modal-title" className="text-2xl sm:text-3xl font-bold text-slate-900 mb-2 tracking-tight">빠른 상담 신청</h2>
                                             <p className="text-slate-500 text-sm sm:text-base leading-relaxed">
                                                 아래 정보를 남겨주시면 <strong className="text-blue-600 font-semibold">최고의 전문 상담사</strong>가<br className="hidden sm:block" />
                                                 가장 빠르고 정확하게 안내해 드리겠습니다.
@@ -400,7 +409,7 @@ export default function ApplicationModal({ isOpen, onClose }: ApplicationModalPr
                                                     <span className="text-[13px] font-bold text-slate-700 group-hover:text-slate-900 transition-colors">
                                                         <span className="text-blue-600">[필수]</span> 상담을 위한 개인정보 수집 및 이용 동의
                                                     </span>
-                                                    <a href="#" className="text-[11px] text-slate-400 ml-1 underline hover:text-slate-600 font-medium" onClick={(e) => e.preventDefault()}>전문보기</a>
+                                                    <a href="#" className="text-[11px] text-slate-400 ml-1 underline hover:text-slate-600 font-medium" onClick={(e) => { e.preventDefault(); onOpenPrivacy?.(); }}>전문보기</a>
                                                     {errors.agreement && (
                                                         <p className="text-red-500 text-[11px] mt-1.5 font-semibold flex items-center gap-1">
                                                             <X className="w-3 h-3" /> {errors.agreement}

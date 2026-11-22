@@ -125,7 +125,7 @@ export default function CTASection({ onOpenModal }: CTASectionProps) {
             <div className="relative z-10 w-full max-w-4xl mx-auto text-center flex flex-col items-center">
                 {/* 메인 카피 (SEO 최적화를 위해 heading 태그 사용 및 ID 부여) */}
                 <h2 id="cta-heading" className="text-3xl sm:text-4xl md:text-5xl lg:text-[clamp(2.5rem,5vw,4.5rem)] font-extrabold text-white leading-tight tracking-tight break-keep mb-6">
-                    2026년 최고의 선택이<br className="md:hidden" /> 되어드리겠습니다
+                    사업의 첫 주소,<br className="md:hidden" /> 플러스오피스가 함께하겠습니다
                 </h2>
 
                 {/* 서브 카피 */}
@@ -141,12 +141,12 @@ export default function CTASection({ onOpenModal }: CTASectionProps) {
                     <button
                         onClick={onOpenModal}
                         className="px-6 sm:px-8 py-4 bg-white text-black text-base md:text-lg font-bold rounded-full shadow-[0_0_20px_rgba(255,255,255,0.15)] hover:bg-gray-100 hover:shadow-[0_0_30px_rgba(255,255,255,0.3)] hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-white/50 transition-all duration-300 w-full sm:w-auto min-w-[240px]"
-                        aria-label="빠른 계약 신청하기 모달 열기"
+                        aria-label="빠른 상담 신청 모달 열기"
                     >
-                        빠른계약신청하기
+                        빠른 상담 신청
                     </button>
                     <a
-                        href="http://pf.kakao.com/_xnWMwG"
+                        href="https://pf.kakao.com/_xnWMwG"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex items-center justify-center px-6 sm:px-8 py-4 bg-transparent text-white text-base md:text-lg font-semibold rounded-full shadow-lg border border-gray-600 hover:bg-white/10 hover:border-gray-400 hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-gray-500/50 transition-all duration-300 w-full sm:w-auto min-w-[240px] no-underline"
