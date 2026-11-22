@@ -5,7 +5,7 @@ const features = [
     {
         icon: ShieldCheck,
         title: "전 지점 본사 직영 운영",
-        description: "비상주사무실 전문 법인이 직접 운영하여 폐업 걱정 없이 안전합니다."
+        description: "본사 법인이 지점을 직접 임차·운영해 계약이 안정적으로 이어집니다."
     },
     {
         icon: RefreshCcw,

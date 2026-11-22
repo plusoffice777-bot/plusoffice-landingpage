@@ -6,8 +6,8 @@ import { CreditCard, FileSignature, Building2 } from 'lucide-react';
 const steps = [
     {
         id: '01',
-        title: '온라인 선택 및 간편 결제',
-        desc: '원하는 지점과 이용 기간을 선택 후, 신용카드/네이버페이/카카오페이 등으로 즉시 결제.',
+        title: '지점·기간 선택 및 신청',
+        desc: '지점·기간을 고르고 신청하면 매니저가 확인 후 간편 결제를 안내합니다.',
         icon: CreditCard,
         iconLabel: '신용카드 결제 및 온라인 선택 단계 아이콘',
     },

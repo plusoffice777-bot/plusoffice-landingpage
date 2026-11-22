@@ -125,7 +125,7 @@ function LocationDemo() {
                                 </h3>
                             </div>
                             <p className="text-gray-300 text-sm md:text-base leading-relaxed">
-                                단돈 1만원대로 강남, 서초, 송파 등 핵심 비즈니스 지역의 프리미엄 주소지를 이용하세요.
+                                월 1만원대부터(36개월 기준)  강남, 서초, 송파 등 핵심 비즈니스 지역의 프리미엄 주소지를 이용하세요.
                             </p>
                         </div>
                     </motion.div>
@@ -152,7 +152,7 @@ export default function Feature4() {
 
                     <p className="text-sm md:text-lg text-gray-500 leading-relaxed max-w-lg break-keep">
                         주소 하나로 사업의 품격이 달라집니다.<br />
-                        단돈 1만원대로 강남, 서초, 송파 프리미엄 주소지를 확보하세요.
+                        월 1만원대부터(36개월 기준) 강남, 서초, 송파 프리미엄 주소지를 확보하세요.
                     </p>
                 </div>
 

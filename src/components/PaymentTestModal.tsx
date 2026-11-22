@@ -12,6 +12,7 @@ declare global {
 interface PaymentTestModalProps {
     isOpen: boolean;
     onClose: () => void;
+    onOpenPrivacy?: () => void;
 }
 
 interface FormState {
@@ -26,7 +27,7 @@ interface FormState {
     marketing: boolean;
 }
 
-export default function PaymentTestModal({ isOpen, onClose }: PaymentTestModalProps) {
+export default function PaymentTestModal({ isOpen, onClose, onOpenPrivacy }: PaymentTestModalProps) {
     const defaultFormState: FormState = {
         name: '',
         contact: '',
@@ -445,7 +446,7 @@ export default function PaymentTestModal({ isOpen, onClose }: PaymentTestModalPr
                                                     <span className="text-[13px] font-bold text-slate-700 group-hover:text-slate-900 transition-colors">
                                                         <span className="text-blue-600">[필수]</span> 상담을 위한 개인정보 수집 및 이용 동의
                                                     </span>
-                                                    <a href="#" className="text-[11px] text-slate-400 ml-1 underline hover:text-slate-600 font-medium" onClick={(e) => e.preventDefault()}>전문보기</a>
+                                                    <a href="#" className="text-[11px] text-slate-400 ml-1 underline hover:text-slate-600 font-medium" onClick={(e) => { e.preventDefault(); onOpenPrivacy?.(); }}>전문보기</a>
                                                     {errors.agreement && (
                                                         <p className="text-red-500 text-[11px] mt-1.5 font-semibold flex items-center gap-1">
                                                             <X className="w-3 h-3" /> {errors.agreement}

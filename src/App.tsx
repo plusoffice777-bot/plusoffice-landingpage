@@ -83,7 +83,7 @@ export default function App() {
         className="bg-white py-[60px] md:py-[100px] lg:py-[120px] flex flex-col items-center justify-center text-center px-4 border-b border-gray-100"
       >
         <h2 className="text-3xl md:text-5xl font-extrabold text-gray-900 tracking-tight leading-tight mb-4 md:mb-5">
-          플러스오피스만의<br className="md:hidden" /> 5가지 압도적인 서비스
+          플러스오피스만의<br className="md:hidden" /> 4가지 핵심 서비스
         </h2>
         <p className="text-base md:text-xl text-gray-500 font-medium tracking-tight break-keep mb-[40px] md:mb-[50px] lg:mb-[60px]">
           대표님만을 위한 전담 매니저부터 사업자등록 대행까지, 플러스오피스에선 당연한 서비스입니다
@@ -116,9 +116,9 @@ export default function App() {
 
       {/* 8. 신청 모달 (ApplicationModal or PaymentTestModal) */}
       {isTestPayment ? (
-        <PaymentTestModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+        <PaymentTestModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} onOpenPrivacy={() => setActivePolicy('privacy')} />
       ) : (
-        <ApplicationModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+        <ApplicationModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} onOpenPrivacy={() => setActivePolicy('privacy')} />
       )}
 
       {/* 9. 약관 모달 (PolicyModal) */}
