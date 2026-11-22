@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, Check, ChevronDown } from 'lucide-react';
 import { submitLead } from '../lib/submitLead';
+import { track, toMonths } from '../lib/analytics';
 
 interface ApplicationModalProps {
     isOpen: boolean;
@@ -151,6 +152,13 @@ export default function ApplicationModal({ isOpen, onClose }: ApplicationModalPr
             try {
                 // 서버 함수(/api/submit-lead)가 에어테이블에 기록한다 (토큰은 서버에만 있음)
                 await submitLead(form, 'homepage');
+                // 광고 전환 측정: 서버 저장 성공 후에만, 개인정보 없이 보낸다
+                track('generate_lead', {
+                    branch: form.region,
+                    period_months: toMonths(form.duration),
+                    package: form.benefit,
+                    lead_source: 'homepage',
+                });
                 setIsSuccess(true);
             } catch (error) {
                 console.error('Submission Error:', error);

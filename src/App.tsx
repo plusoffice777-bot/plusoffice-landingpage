@@ -20,17 +20,40 @@ import Footer from './components/Footer';
 // import { Analytics } from '@vercel/analytics/react';
 // import { SpeedInsights } from '@vercel/speed-insights/react';
 import { useEffect } from 'react';
+import { track, isProductionHost } from './lib/analytics';
 
 export default function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activePolicy, setActivePolicy] = useState<PolicyType>(null);
   const [isTestPayment, setIsTestPayment] = useState(false);
 
+  const openModal = (ctaLocation: string) => {
+    track('open_form', { cta_location: ctaLocation });
+    setIsModalOpen(true);
+  };
+
+  // 전화·카카오 채널 클릭 측정 (링크가 여러 컴포넌트에 흩어져 있어 한 곳에서 감지)
+  useEffect(() => {
+    const onClick = (e: MouseEvent) => {
+      const link = (e.target as Element | null)?.closest?.('a');
+      if (!link) return;
+      const href = link.getAttribute('href') || '';
+      const where = link.closest('header')
+        ? 'header'
+        : link.closest('section[id]')?.id || link.closest('section, footer')?.tagName.toLowerCase() || 'page';
+      if (href.startsWith('tel:')) track('click_call', { cta_location: where });
+      else if (href.includes('pf.kakao.com')) track('click_kakao', { cta_location: where });
+    };
+    document.addEventListener('click', onClick);
+    return () => document.removeEventListener('click', onClick);
+  }, []);
+
   useEffect(() => {
     // UTM 파라미터 캡처 및 세션 저장 로직
     const urlParams = new URLSearchParams(window.location.search);
-    
-    if (urlParams.get('test_payment') === 'true') {
+
+    // 테스트 결제 화면은 운영 주소에서는 열지 않는다 (미리보기·로컬 전용)
+    if (!isProductionHost() && urlParams.get('test_payment') === 'true') {
       setIsTestPayment(true);
     }
 
@@ -48,7 +71,7 @@ export default function App() {
     <main className="min-h-screen bg-[#fafafa] flex flex-col font-sans relative">
       {/* <Analytics />
       <SpeedInsights /> */}
-      <HeroSection onOpenModal={() => setIsModalOpen(true)} />
+      <HeroSection onOpenModal={() => openModal('hero')} />
       <TrustSection />
 
       <motion.section
@@ -86,7 +109,7 @@ export default function App() {
       <FAQSection />
 
       {/* 6. 하단 최종 CTA 섹션 */}
-      <CTASection onOpenModal={() => setIsModalOpen(true)} />
+      <CTASection onOpenModal={() => openModal('cta')} />
 
       {/* 7. 푸터 */}
       <Footer onOpenPolicy={(type) => setActivePolicy(type)} />
